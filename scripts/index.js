@@ -1,16 +1,16 @@
 let popup = document.querySelector(".popup");
 let popupEditButton = document.querySelector(".profile__edit-button");
-let popupCloseButton = document.querySelector(".popup__close-button");
-let editForm = document.querySelector(".popup__edit-form");
-let inputTitle = editForm.querySelector(".popup__input_title");
-let inputSubtitle = editForm.querySelector(".popup__input_subtitle");
+let popupCloseButton = popup.querySelector(".popup__close-button");
+let editForm = popup.querySelector(".popup__edit-form");
+let inputTitle = editForm.querySelector(".popup__input_type_title");
+let inputSubtitle = editForm.querySelector(".popup__input_type_subtitle");
 let profileTitle = document.querySelector(".profile__title");
 let profileSubtitle = document.querySelector(".profile__subtitle");
 
 function openPopup() {
-    popup.classList.add("popup_opened");
     inputTitle.value = profileTitle.textContent;
     inputSubtitle.value = profileSubtitle.textContent;
+    popup.classList.add("popup_opened");
 }
 
 function closePopup() {
