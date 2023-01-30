@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="pages/index.css" />
+    <title>Mesto</title>
+  </head>
+  <body class="page">
+    <header class="header">
+      <img
+        class="header__logo"
+        src="./images/header-logo.svg"
+        alt="Логотип Mesto Russia"
+      />
+    </header>
+    <main class="content">
+      <section class="profile">
+        <img
+          class="profile__avatar"
+          src="./images/jacques-yves-cousteau.jpg"
+          alt="Жак-Ив Кусто"
+        />
+        <div class="profile__info">
+          <div class="profile__block">
+            <h1 class="profile__title">Жак-Ив Кусто</h1>
+            <button class="profile__edit-button" type="button"></button>
+          </div>
+          <p class="profile__subtitle">Исследователь океана</p>
+        </div>
+        <button class="profile__add-button" type="button"></button>
+      </section>
+      <section class="elements">
+        <div class="element">
+          <img
+            class="element__image"
+            src="./images/kirill-pershin-1088404-unsplash.jpg"
+            alt="Карачаевск"
+          />
+          <div class="element__block">
+            <h2 class="element__title">Карачаевск</h2>
+            <button class="element__like-button"></button>
+          </div>
+        </div>
+        <div class="element">
+          <img
+            class="element__image"
+            src="./images/kirill-pershin-1404681-unsplash.jpg"
+            alt="Гора Эльбрус"
+          />
+          <div class="element__block">
+            <h2 class="element__title">Гора Эльбрус</h2>
+            <button class="element__like-button"></button>
+          </div>
+        </div>
+        <div class="element">
+          <img
+            class="element__image"
+            src="./images/kirill-pershin-1556355-unsplash.jpg"
+            alt="Домбай"
+          />
+          <div class="element__block">
+            <h2 class="element__title">Домбай</h2>
+            <button class="element__like-button"></button>
+          </div>
+        </div>
+        <div class="element">
+          <img
+            class="element__image"
+            src="./images/kirill-pershin-1404681-unsplash.jpg"
+            alt="Гора Эльбрус"
+          />
+          <div class="element__block">
+            <h2 class="element__title">Гора Эльбрус</h2>
+            <button class="element__like-button"></button>
+          </div>
+        </div>
+        <div class="element">
+          <img
+            class="element__image"
+            src="./images/kirill-pershin-1556355-unsplash.jpg"
+            alt="Домбай"
+          />
+          <div class="element__block">
+            <h2 class="element__title">Домбай</h2>
+            <button class="element__like-button"></button>
+          </div>
+        </div>
+        <div class="element">
+          <img
+            class="element__image"
+            src="./images/kirill-pershin-1088404-unsplash.jpg"
+            alt="Карачаевск"
+          />
+          <div class="element__block">
+            <h2 class="element__title">Карачаевск</h2>
+            <button class="element__like-button"></button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <p class="footer__copyright">&#169; 2023 Mesto Russia</p>
+    </footer>
+    <div class="popup">
+      <div class="popup__container">
+        <button
+          class="popup__close-button"
+          type="button"
+          aria-label="Close"
+        ></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form class="popup__edit-form" name="popup-edit-form">
+          <input
+            class="popup__input popup__input_title"
+            type="text"
+            name="title"
+          />
+          <input
+            class="popup__input popup__input_subtitle"
+            type="text"
+            name="subtitle"
+          />
+          <button class="popup__save-button" type="submit">Сохранить</button>
+        </form>
+      </div>
+    </div>
+    <script src="./scripts/script.js"></script>
+  </body>
+</html>
