@@ -1,3 +1,4 @@
+const popupElement = document.querySelectorAll('.popup')
 const popupEditProfile = document.querySelector(".popup_edit-profile");
 const buttonEditProfile = document.querySelector(".profile__edit-button");
 const buttonClosePopupEditProfile = popupEditProfile.querySelector(".popup__close-button");
@@ -26,6 +27,7 @@ const buttonClosePopupZoomCard = popupZoomCard.querySelector(".popup__close-butt
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
+  document.addEventListener('keydown', closePopupByPressEscape);
 }
 
 function openPopupEditProfile(popup) {
@@ -36,6 +38,14 @@ function openPopupEditProfile(popup) {
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
+  document.removeEventListener('keydown', closePopupByPressEscape);
+}
+
+function closePopupByPressEscape(evt) {
+  if (evt.key === 'Escape') {
+      const popup = document.querySelector('.popup_opened');
+      closePopup(popup);
+  }
 }
 
 function submitEditProfileForm(evt) {
@@ -52,8 +62,8 @@ function submitAddCardForm(evt) {
     link: popupAddCardInputSubtitle.value,
   }
   renderCard(card);
+  evt.target.reset();
   closePopup(popupAddCard);
-  resetForm(evt.target);
 }
 
 function addCard(elem) {
@@ -93,9 +103,16 @@ function fillByInitialCards(initCards) {
   });
 }
 
-function resetForm(form) {
-  form.reset();
-};
+popupElement.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup__close-button')) {
+      closePopup(popup)
+    }
+    if (evt.target.classList.contains('popup_opened')) {
+          closePopup(popup)
+    }
+  })
+})
 
 fillByInitialCards(initialCards);
 

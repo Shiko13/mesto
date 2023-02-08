@@ -35,3 +35,6 @@
 @import url(../blocks/zoom/zoom.css);
 @import url(../blocks/zoom/__title/zoom__title.css);
 @import url(../blocks/zoom/__image/zoom__image.css);
+@import url(../blocks/popup/__error/popup__error.css);
+@import url(../blocks/popup/__form/popup__form.css);
+@import url(../blocks/popup/__save-button/_disabled/popup__save-button_disabled.css);

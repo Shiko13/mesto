@@ -1,0 +1,17 @@
+.popup__error {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: #ff0000;
+    opacity: 0;
+    max-width: 358px;
+    margin-bottom: 13px;
+}
+
+.popup__error:last-of-type {
+    margin-bottom: 30px;
+}
+
+.popup__error_visible {
+    opacity: 1;
+}
