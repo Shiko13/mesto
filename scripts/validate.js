@@ -57,6 +57,21 @@ const setEventListeners = (formElement, classType) => {
             toggleButtonState(inputList, button, classType);
         });
     });
+
+    formElement.addEventListener('reset', () => {
+        setTimeout(() => {
+            resetValidation(formElement, classType);
+            toggleButtonState(inputList, button, classType);
+        }, 0);
+    });
+}
+
+const resetValidation = (formElement, classType) => {
+    const inputList = [...formElement.querySelectorAll(classType.inputSelector)];
+
+    inputList.forEach((input) => {
+        hideInputError(formElement, input, classType);
+    });
 }
 
 enableValidation ({

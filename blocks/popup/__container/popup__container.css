@@ -5,15 +5,17 @@
     color: #000;
     position: relative;
     width: 430px;
-    padding: 35px 36px 37px;
+    padding: 34px 36px 37px 36px;
     border-radius: 12px;
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
 }
 
 @media (max-width: 900px) {
     .popup__container {
         width: 282px;
-        padding: 25px 22px;
+        padding: 25px 22px 25px 22px;
     }
 }

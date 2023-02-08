@@ -1,4 +1,4 @@
-const popupElement = document.querySelectorAll('.popup')
+const popupElements = document.querySelectorAll('.popup')
 const popupEditProfile = document.querySelector(".popup_edit-profile");
 const buttonEditProfile = document.querySelector(".profile__edit-button");
 const buttonClosePopupEditProfile = popupEditProfile.querySelector(".popup__close-button");
@@ -19,10 +19,11 @@ const profileAddButton = document.querySelector(".profile__add-button");
 const buttonClosePopupAddCard = popupAddCard.querySelector(".popup__close-button");
 const popupAddCardInputTitle = popupAddCard.querySelector('.popup__input_type_title');
 const popupAddCardInputSubtitle = popupAddCard.querySelector('.popup__input_type_subtitle');
+const popupAddForm = popupAddCard.querySelector('.popup__add-form');
 
 const popupZoomCard = document.querySelector('.popup_zoom-card');
-const ZoomImage = document.querySelector('.zoom__image');
-const ZoomTitle = document.querySelector('.zoom__title');
+const zoomImage = document.querySelector('.zoom__image');
+const zoomTitle = document.querySelector('.zoom__title');
 const buttonClosePopupZoomCard = popupZoomCard.querySelector(".popup__close-button");
 
 function openPopup(popup) {
@@ -30,7 +31,7 @@ function openPopup(popup) {
   document.addEventListener('keydown', closePopupByPressEscape);
 }
 
-function openPopupEditProfile(popup) {
+function openPopupEditProfile() {
   popupEditFormInputTitle.value = profileTitle.textContent;
   popupEditFormInputSubtitle.value = profileSubtitle.textContent;
   openPopup(popupEditProfile);
@@ -39,6 +40,7 @@ function openPopupEditProfile(popup) {
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
   document.removeEventListener('keydown', closePopupByPressEscape);
+  popupAddForm.reset();
 }
 
 function closePopupByPressEscape(evt) {
@@ -66,24 +68,30 @@ function submitAddCardForm(evt) {
   closePopup(popupAddCard);
 }
 
+function removeDeleteButton(evt) {
+  evt.target.parentElement.remove();
+}
+
+function toggleLikeButton(evt) {
+  evt.target.classList.toggle("element__like-button_active");
+}
+
+function fillZoomCard(evt) {
+  const cardTitle = evt.target.closest('.element').querySelector('.element__title'); 
+  zoomImage.src = evt.target.src; 
+  zoomImage.alt = evt.target.alt; 
+  zoomTitle.textContent = cardTitle.textContent; 
+  openPopup(popupZoomCard); 
+}
+
 function addCard(elem) {
   const cloneCard = elementTemplate.cloneNode(true);
   const cloneCardTitle = cloneCard.querySelector(".element__title");
   const cloneCardImage = cloneCard.querySelector(".element__image");
 
-  cloneCard.querySelector('.element__delete-button').addEventListener('click', function (evt) {
-    evt.target.parentElement.remove()
-  });
-  cloneCard.querySelector(".element__like-button").addEventListener("click", function (evt) {
-    evt.target.classList.toggle("element__like-button_active")
-  });
-  cloneCard.querySelector('.element__image').addEventListener('click', function (evt) {
-    const cardTitle = evt.target.closest('.element').querySelector('.element__title'); 
-    ZoomImage.src = evt.target.src; 
-    ZoomImage.alt = evt.target.alt; 
-    ZoomTitle.textContent = cardTitle.textContent; 
-    openPopup(popupZoomCard); 
-  });
+  cloneCard.querySelector('.element__delete-button').addEventListener('click', removeDeleteButton);
+  cloneCard.querySelector(".element__like-button").addEventListener("click", toggleLikeButton);
+  cloneCard.querySelector('.element__image').addEventListener('click', fillZoomCard);
 
   cloneCardImage.src = elem.link;
   cloneCardImage.alt = `"${elem.name}"`;
@@ -103,7 +111,7 @@ function fillByInitialCards(initCards) {
   });
 }
 
-popupElement.forEach((popup) => {
+popupElements.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
     if (evt.target.classList.contains('popup__close-button')) {
       closePopup(popup)
@@ -116,11 +124,8 @@ popupElement.forEach((popup) => {
 
 fillByInitialCards(initialCards);
 
-buttonEditProfile.addEventListener("click", function () {openPopupEditProfile(popupEditProfile)});
+buttonEditProfile.addEventListener("click", function () {openPopupEditProfile()});
 profileAddButton.addEventListener("click", function () {openPopup(popupAddCard)});
-buttonClosePopupEditProfile.addEventListener("click", function () {closePopup(popupEditProfile)});
-buttonClosePopupAddCard.addEventListener("click", function () {closePopup(popupAddCard)});
-buttonClosePopupZoomCard.addEventListener("click", function () {closePopup(popupZoomCard)});
 popupEditForm.addEventListener("submit", submitEditProfileForm);
 popupAddCard.addEventListener("submit", submitAddCardForm);
 

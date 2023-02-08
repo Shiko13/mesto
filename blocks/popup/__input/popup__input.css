@@ -2,28 +2,22 @@
     font-size: 14px;
     font-weight: 400;
     line-height: 17px;
-    block-size: 14px;
-    text-align: left;
+    height: 14px;
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     color: #000;
-    max-width: 100%;
-    padding: 0 0 12px 0;
-    margin-bottom: 17px;
-}
-
-.popup__input:last-of-type {
-    margin-bottom: 2px;
+    width: 358px;
+    padding: 2px 0 13px 0;
+    margin: 0;
 }
 
 .popup__input_type_error {
     border-bottom: 1px solid #ff0000;
-    margin-bottom: 5px;
 }
 
 @media (max-width: 900px) {
-    .popup__input:last-of-type {
-        margin-bottom: 45px;
+    .popup__input {
         padding-bottom: 13px;
+        width: 100%;
     }
 }

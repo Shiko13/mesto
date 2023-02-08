@@ -3,4 +3,21 @@
     color: #000;
     border: 1px solid #000;
     opacity: 0.2;
+    width: 358px;
+    height: 50px;
+    margin: 15px 4px 0 0;
+}
+
+.popup__save-button_disabled:hover {
+    opacity: 0.2;
+    cursor: default;
+}
+
+@media (max-width: 900px) {
+    .popup__save-button_disabled {
+        font-size: 14px;
+        height: 46px;
+        line-height: 17px;
+        margin-top: 10px;
+    }
 }
