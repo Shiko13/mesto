@@ -76,10 +76,10 @@ function toggleLikeButton(evt) {
   evt.target.classList.toggle("element__like-button_active");
 }
 
-function fillZoomCard(src, alt, textContent) {
-  zoomImage.src = src; 
-  zoomImage.alt = alt; 
-  zoomTitle.textContent = textContent; 
+function fillZoomCard(elem) {
+  zoomImage.src = elem.link; 
+  zoomImage.alt = elem.name; 
+  zoomTitle.textContent = elem.name; 
   openPopup(popupZoomCard); 
 }
 
@@ -95,8 +95,7 @@ function addCard(elem) {
   cloneCardImage.alt = `"${elem.name}"`;
   cloneCardTitle.textContent = elem.name;
 
-  cloneCard.querySelector('.element__image').addEventListener('click', () => fillZoomCard(cloneCardImage.src,
-                                                cloneCardImage.alt, cloneCardTitle.textContent));
+  cloneCard.querySelector('.element__image').addEventListener('click', () => fillZoomCard(elem));
 
   return cloneCard;
 }
