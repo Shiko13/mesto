@@ -34,13 +34,13 @@ function openPopup(popup) {
 function openPopupEditProfile() {
   popupEditFormInputTitle.value = profileTitle.textContent;
   popupEditFormInputSubtitle.value = profileSubtitle.textContent;
+  resetValidation(popupEditForm, enableValidation);
   openPopup(popupEditProfile);
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
   document.removeEventListener('keydown', closePopupByPressEscape);
-  popupAddForm.reset();
 }
 
 function closePopupByPressEscape(evt) {
@@ -63,7 +63,7 @@ function submitAddCardForm(evt) {
     name: popupAddCardInputTitle.value,
     link: popupAddCardInputSubtitle.value,
   }
-  renderCard(card);
+  renderCard(card, cards);
   evt.target.reset();
   closePopup(popupAddCard);
 }
@@ -76,11 +76,10 @@ function toggleLikeButton(evt) {
   evt.target.classList.toggle("element__like-button_active");
 }
 
-function fillZoomCard(evt) {
-  const cardTitle = evt.target.closest('.element').querySelector('.element__title'); 
-  zoomImage.src = evt.target.src; 
-  zoomImage.alt = evt.target.alt; 
-  zoomTitle.textContent = cardTitle.textContent; 
+function fillZoomCard(src, alt, textContent) {
+  zoomImage.src = src; 
+  zoomImage.alt = alt; 
+  zoomTitle.textContent = textContent; 
   openPopup(popupZoomCard); 
 }
 
@@ -91,23 +90,25 @@ function addCard(elem) {
 
   cloneCard.querySelector('.element__delete-button').addEventListener('click', removeDeleteButton);
   cloneCard.querySelector(".element__like-button").addEventListener("click", toggleLikeButton);
-  cloneCard.querySelector('.element__image').addEventListener('click', fillZoomCard);
-
+  
   cloneCardImage.src = elem.link;
   cloneCardImage.alt = `"${elem.name}"`;
   cloneCardTitle.textContent = elem.name;
 
+  cloneCard.querySelector('.element__image').addEventListener('click', () => fillZoomCard(cloneCardImage.src,
+                                                cloneCardImage.alt, cloneCardTitle.textContent));
+
   return cloneCard;
 }
 
-function renderCard(cardData) {
+function renderCard(cardData, container) {
   const card = addCard(cardData);
-  cards.prepend(card);
+  container.prepend(card);
 }
 
 function fillByInitialCards(initCards) {
   initCards.forEach((elem) => {
-    renderCard(elem);
+    renderCard(elem, cards);
   });
 }
 
@@ -125,7 +126,10 @@ popupElements.forEach((popup) => {
 fillByInitialCards(initialCards);
 
 buttonEditProfile.addEventListener("click", function () {openPopupEditProfile()});
-profileAddButton.addEventListener("click", function () {openPopup(popupAddCard)});
+profileAddButton.addEventListener("click", () => {
+  popupAddForm.reset();
+  openPopup(popupAddCard)
+});
 popupEditForm.addEventListener("submit", submitEditProfileForm);
 popupAddCard.addEventListener("submit", submitAddCardForm);
 
