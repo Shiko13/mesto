@@ -34,7 +34,7 @@ function openPopup(popup) {
 function openPopupEditProfile() {
   popupEditFormInputTitle.value = profileTitle.textContent;
   popupEditFormInputSubtitle.value = profileSubtitle.textContent;
-  resetValidation(popupEditForm, enableValidation);
+  resetProfileValidation(popupEditForm);
   openPopup(popupEditProfile);
 }
 
@@ -122,6 +122,16 @@ popupElements.forEach((popup) => {
     }
   })
 })
+
+function resetProfileValidation(form) {
+  const inputList = [...form.querySelectorAll('.popup__input')];
+  inputList.forEach((input) => {
+    const formError = form.querySelector(`#${input.id}-error`);
+    input.classList.remove('popup__input_type_error');
+    formError.classList.remove('popup__input_type_error');
+    formError.textContent = '';
+  });
+}
 
 fillByInitialCards(initialCards);
 
