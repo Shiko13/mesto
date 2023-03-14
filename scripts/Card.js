@@ -40,7 +40,7 @@ export class Card {
     evt.target.classList.toggle("element__like-button_active");
   }
 
-  _handleCardClick(elem) {
+  _handleCardClick() {
     this._zoomImage.src = this._link;
     this._zoomImage.alt = this._name;
     this._zoomTitle.textContent = this._name;
