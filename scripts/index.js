@@ -4,7 +4,7 @@ import { FormValidator } from './FormValidator.js';
 const popupElements = document.querySelectorAll('.popup')
 const popupEditProfile = document.querySelector(".popup_edit-profile");
 const buttonEditProfile = document.querySelector(".profile__edit-button");
-const popupEditForm = popupEditProfile.querySelector(".popup__edit-form");
+const popupEditForm = document.forms["edit-form"];
 const popupEditFormInputTitle = popupEditForm.querySelector(".popup__input_type_title");
 const popupEditFormInputSubtitle = popupEditForm.querySelector(
   ".popup__input_type_subtitle"
@@ -17,7 +17,7 @@ const popupAddCard = document.querySelector(".popup_add-card");
 const profileAddButton = document.querySelector(".profile__add-button");
 const popupAddCardInputTitle = popupAddCard.querySelector('.popup__input_type_title');
 const popupAddCardInputSubtitle = popupAddCard.querySelector('.popup__input_type_subtitle');
-const popupAddForm = popupAddCard.querySelector('.popup__add-form');
+const popupAddForm = document.forms["add-form"];
 
 const popupZoomCard = document.querySelector('.popup_zoom-card');
 const zoomImage = document.querySelector('.zoom__image');
@@ -38,9 +38,9 @@ function openPopup(popup) {
 }
 
 function openPopupEditProfile() {
+  popupEditForm.reset();
   popupEditFormInputTitle.value = profileTitle.textContent;
   popupEditFormInputSubtitle.value = profileSubtitle.textContent;
-  resetProfileValidation(popupEditForm);
   openPopup(popupEditProfile);
 }
 
@@ -75,9 +75,13 @@ function submitAddCardForm(evt) {
 }
 
 function renderCard(cardData, container) {
-  const card = new Card(cardData, "#element-template", openPopup, popupZoomCard, zoomImage, zoomTitle);
-  const newCard = card.addCard();
-  container.prepend(newCard);
+  const card = createCard(cardData);
+  container.prepend(card);
+}
+
+function createCard(item) {
+  const cardElement = new Card(item, "#element-template", openPopup, popupZoomCard, zoomImage, zoomTitle).addCard();
+  return cardElement;
 }
 
 function fillByInitialCards(initCards) {
@@ -96,16 +100,6 @@ popupElements.forEach((popup) => {
     }
   })
 })
-
-function resetProfileValidation(form) {
-  const inputList = [...form.querySelectorAll('.popup__input')];
-  inputList.forEach((input) => {
-    const formError = form.querySelector(`#${input.id}-error`);
-    input.classList.remove('popup__input_type_error');
-    formError.classList.remove('popup__input_type_error');
-    formError.textContent = '';
-  });
-}
 
 fillByInitialCards(initialCards);
 

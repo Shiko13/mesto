@@ -32,7 +32,7 @@ export class Card {
     return this._cloneCard;
   }
 
-  _removeDeleteButton(evt) {
+  _removeCard(evt) {
     evt.target.parentElement.remove();
   }
 
@@ -40,7 +40,7 @@ export class Card {
     evt.target.classList.toggle("element__like-button_active");
   }
 
-  _fillZoomCard(elem) {
+  _handleCardClick(elem) {
     this._zoomImage.src = this._link;
     this._zoomImage.alt = this._name;
     this._zoomTitle.textContent = this._name;
@@ -50,12 +50,11 @@ export class Card {
   _setEventListeners() {
     this._cloneCard
       .querySelector(".element__delete-button")
-      .addEventListener("click", this._removeDeleteButton);
+      .addEventListener("click", this._removeCard);
     this._cloneCard
       .querySelector(".element__like-button")
       .addEventListener("click", this._toggleLikeButton);
-    this._cloneCard
-      .querySelector(".element__image")
-      .addEventListener("click", () => this._fillZoomCard());
+    this._cloneCardImage
+      .addEventListener("click", () => this._handleCardClick());
   }
 }

@@ -49,14 +49,6 @@ export class FormValidator {
         }
     }
     
-    _enableValidation() {
-        const formList = Array.from(document.querySelectorAll(this._formSelector));
-    
-        formList.forEach((formElement) => {
-            this._setEventListeners(formElement);
-        });
-    }
-    
     _setEventListeners() {
         this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
         this._button = this._formElement.querySelector(this._submitButtonSelector);
@@ -78,9 +70,7 @@ export class FormValidator {
     }
     
     _resetValidation() {
-        const inputList = [...this._formElement.querySelectorAll(this._inputSelector)];
-    
-        inputList.forEach((input) => {
+        this._inputList.forEach((input) => {
             this._hideInputError(input);
         });
     }
