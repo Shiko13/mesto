@@ -1,7 +1,9 @@
+import { Card } from './Card.js';
+import { FormValidator } from './FormValidator.js';
+
 const popupElements = document.querySelectorAll('.popup')
 const popupEditProfile = document.querySelector(".popup_edit-profile");
 const buttonEditProfile = document.querySelector(".profile__edit-button");
-const buttonClosePopupEditProfile = popupEditProfile.querySelector(".popup__close-button");
 const popupEditForm = popupEditProfile.querySelector(".popup__edit-form");
 const popupEditFormInputTitle = popupEditForm.querySelector(".popup__input_type_title");
 const popupEditFormInputSubtitle = popupEditForm.querySelector(
@@ -11,12 +13,8 @@ const profileTitle = document.querySelector(".profile__title");
 const profileSubtitle = document.querySelector(".profile__subtitle");
 
 const cards = document.querySelector(".cards");
-const elementTemplate = cards
-  .querySelector("#element-template")
-  .content.querySelector(".element");
 const popupAddCard = document.querySelector(".popup_add-card");
 const profileAddButton = document.querySelector(".profile__add-button");
-const buttonClosePopupAddCard = popupAddCard.querySelector(".popup__close-button");
 const popupAddCardInputTitle = popupAddCard.querySelector('.popup__input_type_title');
 const popupAddCardInputSubtitle = popupAddCard.querySelector('.popup__input_type_subtitle');
 const popupAddForm = popupAddCard.querySelector('.popup__add-form');
@@ -24,7 +22,15 @@ const popupAddForm = popupAddCard.querySelector('.popup__add-form');
 const popupZoomCard = document.querySelector('.popup_zoom-card');
 const zoomImage = document.querySelector('.zoom__image');
 const zoomTitle = document.querySelector('.zoom__title');
-const buttonClosePopupZoomCard = popupZoomCard.querySelector(".popup__close-button");
+
+const configuration = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__save-button',
+    inactiveButtonClass: 'popup__save-button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__error_visible',
+}
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
@@ -68,41 +74,10 @@ function submitAddCardForm(evt) {
   closePopup(popupAddCard);
 }
 
-function removeDeleteButton(evt) {
-  evt.target.parentElement.remove();
-}
-
-function toggleLikeButton(evt) {
-  evt.target.classList.toggle("element__like-button_active");
-}
-
-function fillZoomCard(elem) {
-  zoomImage.src = elem.link; 
-  zoomImage.alt = elem.name; 
-  zoomTitle.textContent = elem.name; 
-  openPopup(popupZoomCard); 
-}
-
-function addCard(elem) {
-  const cloneCard = elementTemplate.cloneNode(true);
-  const cloneCardTitle = cloneCard.querySelector(".element__title");
-  const cloneCardImage = cloneCard.querySelector(".element__image");
-
-  cloneCard.querySelector('.element__delete-button').addEventListener('click', removeDeleteButton);
-  cloneCard.querySelector(".element__like-button").addEventListener("click", toggleLikeButton);
-  
-  cloneCardImage.src = elem.link;
-  cloneCardImage.alt = `"${elem.name}"`;
-  cloneCardTitle.textContent = elem.name;
-
-  cloneCard.querySelector('.element__image').addEventListener('click', () => fillZoomCard(elem));
-
-  return cloneCard;
-}
-
 function renderCard(cardData, container) {
-  const card = addCard(cardData);
-  container.prepend(card);
+  const card = new Card(cardData, "#element-template", openPopup, popupZoomCard, zoomImage, zoomTitle);
+  const newCard = card.addCard();
+  container.prepend(newCard);
 }
 
 function fillByInitialCards(initCards) {
@@ -141,4 +116,10 @@ profileAddButton.addEventListener("click", () => {
 });
 popupEditForm.addEventListener("submit", submitEditProfileForm);
 popupAddCard.addEventListener("submit", submitAddCardForm);
+
+const editFormValidation = new FormValidator(configuration, popupEditProfile);
+editFormValidation.enableValidation();
+
+const addCardValidation = new FormValidator(configuration, popupAddCard);
+addCardValidation.enableValidation();
 
