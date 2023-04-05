@@ -7,12 +7,10 @@ export class Card {
   }
 
   _getTemplate() {
-    const cardElement = document
+    return document
       .querySelector(this._selector)
       .content.querySelector(".element")
       .cloneNode(true);
-    
-    return cardElement;
   }
 
   addCard() {
