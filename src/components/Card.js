@@ -1,12 +1,9 @@
 export class Card {
-  constructor(data, templateSelector, openPopup, popupZoomCard, zoomImage, zoomTitle) {
+  constructor(data, templateSelector, { handleCardClick }) {
     this._name = data.name;
     this._link = data.link;
     this._selector = templateSelector;
-    this._openPopup = openPopup;
-    this._popupZoomCard = popupZoomCard;
-    this._zoomImage = zoomImage;
-    this._zoomTitle = zoomTitle;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -40,13 +37,6 @@ export class Card {
     evt.target.classList.toggle("element__like-button_active");
   }
 
-  _handleCardClick() {
-    this._zoomImage.src = this._link;
-    this._zoomImage.alt = this._name;
-    this._zoomTitle.textContent = this._name;
-    this._openPopup(this._popupZoomCard);
-  }
-
   _setEventListeners() {
     this._cloneCard
       .querySelector(".element__delete-button")
@@ -55,6 +45,6 @@ export class Card {
       .querySelector(".element__like-button")
       .addEventListener("click", this._toggleLikeButton);
     this._cloneCardImage
-      .addEventListener("click", () => this._handleCardClick());
+      .addEventListener("click", () => this._handleCardClick(this._name, this._link));
   }
 }
