@@ -3,11 +3,12 @@
     width: 18px;
     height: 19px;
     border: none;
-    position: relative;
-    top: -265px;
-    right: -245px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
     padding: 0;
     background-color: transparent;
+    display: none;
 }
 
 .element__delete-button:hover {

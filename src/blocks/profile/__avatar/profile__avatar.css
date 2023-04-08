@@ -6,6 +6,12 @@
     border-radius: 50%;
 }
 
+.profile__avatar:hover {
+    cursor: pointer;
+    opacity: 0.2;
+    transition: opacity 0.3s ease-in-out;
+}
+
 @media (max-width: 900px) {
     .profile__avatar {
         margin: 0 auto;

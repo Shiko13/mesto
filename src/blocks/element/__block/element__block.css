@@ -1,10 +1,7 @@
 .element__block {
     display: flex;
     justify-content: space-between;
+    width: 246px;
+    padding: 20px 15px 20px 21px;
     flex-direction: row;
-    align-items: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    margin: 0;
 }

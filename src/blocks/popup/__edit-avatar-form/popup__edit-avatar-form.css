@@ -1,0 +1,5 @@
+.popup__edit-avatar-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+}

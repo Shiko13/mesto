@@ -17,11 +17,13 @@
 
     <main class="content">
       <section class="profile">
-        <img
-          class="profile__avatar"
-          src="<%=require('./images/jacques-yves-cousteau.jpg')%>"
-          alt="Жак-Ив Кусто"
-        />
+        <button class="profile__avatar-edit-button" type="button">
+          <img
+            class="profile__avatar"
+            src="<%=require('./images/jacques-yves-cousteau.jpg')%>"
+            alt="Жак-Ив Кусто"
+          />
+        </button>
         <div class="profile__info">
           <div class="profile__block">
             <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -51,18 +53,21 @@
               ></button>
               <div class="element__block">
                 <h2 class="element__title"></h2>
-                <button
-                  class="element__like-button"
-                  type="button"
-                  aria-label="Лайкнуть"
-                ></button>
+                <div class="element__like-block">
+                  <button
+                    class="element__like-button"
+                    type="button"
+                    aria-label="Лайкнуть"
+                  ></button>
+                  <p class="element__like-counter"></p>
+                </div>
               </div>
             </li>
           </template>
         </ul>
       </section>
     </main>
-    
+
     <footer class="footer">
       <p class="footer__copyright">&#169; 2023 Mesto Russia</p>
     </footer>
@@ -82,8 +87,8 @@
             name="title"
             placeholder="Имя"
             id="input-edit-title"
-            minlength="2" 
-            maxlength="40" 
+            minlength="2"
+            maxlength="40"
             required
           />
           <span id="input-edit-title-error" class="popup__error"></span>
@@ -93,8 +98,8 @@
             name="subtitle"
             placeholder="Вид деятельности"
             id="input-edit-subtitle"
-            minlength="2" 
-            maxlength="200" 
+            minlength="2"
+            maxlength="200"
             required
           />
           <span id="input-edit-subtitle-error" class="popup__error"></span>
@@ -124,8 +129,8 @@
             name="title"
             placeholder="Название"
             id="input-add-title"
-            minlength="2" 
-            maxlength="30" 
+            minlength="2"
+            maxlength="30"
             required
           />
           <span id="input-add-title-error" class="popup__error"></span>
@@ -138,11 +143,7 @@
             required
           />
           <span id="input-add-subtitle-error" class="popup__error"></span>
-          <button
-            class="popup__save-button"
-            type="submit"
-            aria-label="Создать"
-          >
+          <button class="popup__save-button" type="submit" aria-label="Создать">
             Создать
           </button>
         </form>
@@ -150,15 +151,68 @@
     </div>
 
     <div class="popup popup_zoom-card">
-        <form class="zoom">
-          <button
+      <form class="zoom">
+        <button
           class="popup__close-button"
           type="button"
           aria-label="Закрыть"
         ></button>
-        <img class="zoom__image" src="." alt=".">
+        <img class="zoom__image" src="." alt="." />
         <div class="zoom__title"></div>
+      </form>
+    </div>
+
+    <div class="popup popup_delete-confirmation">
+      <div class="popup__container">
+        <button
+          class="popup__close-button"
+          type="button"
+          aria-label="Закрыть"
+        ></button>
+        <form
+          name="delete-confirmation-form"
+          class="popup__delete-confirmation-form popup__form"
+          novalidate
+        >
+          <h2 class="popup__title">Вы уверены?</h2>
+          <button class="popup__save-button" type="submit" aria-label="Да">
+            Да
+          </button>
         </form>
+      </div>
+    </div>
+
+    <div class="popup popup_edit-avatar">
+      <div class="popup__container">
+        <button
+          class="popup__close-button"
+          type="button"
+          aria-label="Закрыть"
+        ></button>
+        <form
+          name="edit-avatar-form"
+          class="popup__edit-avatar-form popup__form"
+          novalidate
+        >
+          <h2 class="popup__title">Обновить аватар</h2>
+          <input
+            class="popup__input popup__input_type_subtitle"
+            type="url"
+            name="link"
+            placeholder="Ссылка на изображение"
+            id="input-add-avatar"
+            required
+          />
+          <span id="input-add-avatar-error" class="popup__error"></span>
+          <button
+            class="popup__save-button"
+            type="submit"
+            aria-label="Сохранить"
+          >
+            Создать
+          </button>
+        </form>
+      </div>
     </div>
   </body>
 </html>
