@@ -41,11 +41,14 @@ const buttonSaveProfile = document.querySelector(".popup_edit-profile").querySel
 const profileTitle = document.querySelector(".profile__title");
 const profileSubtitle = document.querySelector(".profile__subtitle");
 
-const handleAddCardFormSubmit = (evt, inputData) => {
+const handleAddCardFormSubmit = (inputData) => {
   buttonSaveCard.textContent = "Создание...";
   api
     .addCard({ name: inputData.title, link: inputData.subtitle })
-    .then((res) => createCard(res))
+    .then((res) => {
+      const card = createCard(res);
+      section.addItem(card);
+    })
     .then(() => popupWithForm.close())
     .catch((err) => console.log(err))
     .finally(() => {
@@ -53,11 +56,11 @@ const handleAddCardFormSubmit = (evt, inputData) => {
     });
 };
 
-const handleProfileFormSubmit = (evt, inputData) => {
+const handleProfileFormSubmit = (inputData) => {
   buttonSaveProfile.textContent = "Сохранение...";
   api
     .updateProfileData(inputData)
-    .then((res) => updateProfile(res))
+    .then((res) => userInfo.setUserInfo(res))
     .then(() => popupProfile.close())
     .catch((err) => console.log(err))
     .finally(() => {
@@ -65,24 +68,16 @@ const handleProfileFormSubmit = (evt, inputData) => {
     })
 };
 
-const handleAvatarChanging = (evt, inputData) => {
+const handleAvatarChanging = (inputData) => {
   buttonSaveAvatar.textContent = "Сохранение...";
   api
     .updateProfileAvatar(inputData.link)
-    .then((res) => updateProfile(res))
+    .then((res) => userInfo.setUserAvatar(res))
     .then(() => popupEditAvatar.close())
     .catch((err) => console.log(err))
     .finally(() => {
       buttonSaveAvatar.textContent = "Сохранить";
     });
-};
-
-const updateProfile = (data) => {
-  userInfo.setUserInfo(
-    data.name,
-    data.about,
-    data.avatar
-  );
 };
 
 const addLike = (card) => {
@@ -105,7 +100,7 @@ const deleteLike = (card) => {
 
 const openPopupConfirmation = (element, cardId) => {
   popupConfirm.open();
-  popupConfirm.callbackDeleteCard(() => {
+  popupConfirm.handleDeleteCard(() => {
     api
       .deleteCard(cardId)
       .then(() => {
