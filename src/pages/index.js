@@ -7,77 +7,31 @@ import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import { Api } from "../components/Api.js";
 import { PopupWithConfirmation } from "../components/PopupWithConfirmation.js";
-
-const configuration = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__save-button",
-  inactiveButtonClass: "popup__save-button_disabled",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__error_visible",
-  zoomSelector: ".popup_zoom-card",
-  profileTitleSelector: ".profile__title",
-  profileSubtitleSelector: ".profile__subtitle",
-  profileAvatarSelector: ".profile__avatar",
-  cardsSelector: ".cards",
-};
-
-const popupEditProfile = document.querySelector(".popup_edit-profile");
-const popupEditForm = document.forms["edit-form"];
-const popupEditFormInputTitle = popupEditForm.querySelector(
-  ".popup__input_type_title"
-);
-const popupEditFormInputSubtitle = popupEditForm.querySelector(
-  ".popup__input_type_subtitle"
-);
-const popupAddCard = document.querySelector(".popup_add-card");
-const popupChangeAvatar = document.querySelector(".popup_edit-avatar");
-const buttonEditProfile = document.querySelector(".profile__edit-button");
-const buttonEditAvatar = document.querySelector(".profile__avatar-edit-button");
-const buttonAddProfile = document.querySelector(".profile__add-button");
-const buttonSaveCard = document.querySelector(".popup_add-card").querySelector(".popup__save-button");
-const buttonSaveAvatar = document.querySelector(".popup_edit-avatar").querySelector(".popup__save-button");
-const buttonSaveProfile = document.querySelector(".popup_edit-profile").querySelector(".popup__save-button");
-const profileTitle = document.querySelector(".profile__title");
-const profileSubtitle = document.querySelector(".profile__subtitle");
+import { configuration, popupEditProfile, popupAddCard, popupChangeAvatar, 
+  buttonEditProfile, buttonEditAvatar, buttonAddProfile } from "../utils/constants.js";
 
 const handleAddCardFormSubmit = (inputData) => {
-  buttonSaveCard.textContent = "Создание...";
-  api
+  return api
     .addCard({ name: inputData.title, link: inputData.subtitle })
     .then((res) => {
       const card = createCard(res);
       section.addItem(card);
     })
-    .then(() => popupWithForm.close())
     .catch((err) => console.log(err))
-    .finally(() => {
-      buttonSaveCard.textContent = "Создать";
-    });
 };
 
 const handleProfileFormSubmit = (inputData) => {
-  buttonSaveProfile.textContent = "Сохранение...";
-  api
+  return api
     .updateProfileData(inputData)
     .then((res) => userInfo.setUserInfo(res))
-    .then(() => popupProfile.close())
-    .catch((err) => console.log(err))
-    .finally(() => {
-      buttonSaveProfile.textContent = "Сохранить";
-    })
+    .catch((err) => console.log(err));
 };
 
 const handleAvatarChanging = (inputData) => {
-  buttonSaveAvatar.textContent = "Сохранение...";
-  api
+  return api
     .updateProfileAvatar(inputData.link)
     .then((res) => userInfo.setUserAvatar(res))
-    .then(() => popupEditAvatar.close())
-    .catch((err) => console.log(err))
-    .finally(() => {
-      buttonSaveAvatar.textContent = "Сохранить";
-    });
+    .catch((err) => console.log(err));
 };
 
 const addLike = (card) => {
@@ -120,11 +74,23 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
-const section = new Section({ renderer: createCard }, configuration.cardsSelector);
+const section = new Section(
+  { renderer: createCard },
+  configuration.cardsSelector
+);
 const popupWithImage = new PopupWithImage(configuration.zoomSelector);
-const popupWithForm = new PopupWithForm(".popup_add-card", handleAddCardFormSubmit);
-const popupProfile = new PopupWithForm(".popup_edit-profile", handleProfileFormSubmit);
-const popupEditAvatar = new PopupWithForm(".popup_edit-avatar", handleAvatarChanging);
+const popupWithForm = new PopupWithForm(
+  ".popup_add-card",
+  handleAddCardFormSubmit
+);
+const popupProfile = new PopupWithForm(
+  ".popup_edit-profile",
+  handleProfileFormSubmit
+);
+const popupEditAvatar = new PopupWithForm(
+  ".popup_edit-avatar",
+  handleAvatarChanging
+);
 const popupConfirm = new PopupWithConfirmation(".popup_delete-confirmation");
 const userInfo = new UserInfo({
   titleSelector: configuration.profileTitleSelector,
@@ -152,12 +118,6 @@ function createCard(item) {
   return cardElement;
 }
 
-function openPopupEditProfile() {
-  popupEditFormInputTitle.value = profileTitle.textContent;
-  popupEditFormInputSubtitle.value = profileSubtitle.textContent;
-  popupProfile.open();
-}
-
 formValidation.enableValidation();
 cardValidation.enableValidation();
 avatarValidation.enableValidation();
@@ -168,7 +128,11 @@ popupWithImage.setEventListeners();
 popupProfile.setEventListeners();
 popupConfirm.setEventListeners();
 
-buttonEditProfile.addEventListener("click", openPopupEditProfile);
+buttonEditProfile.addEventListener("click", () => {
+  const infoObject = userInfo.getUserInfo();
+  popupProfile.setInputValues(infoObject);
+  popupProfile.open();
+});
 buttonAddProfile.addEventListener("click", () => {
   popupWithForm.open();
 });

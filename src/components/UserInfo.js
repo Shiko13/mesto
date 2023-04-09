@@ -7,7 +7,11 @@ export default class UserInfo {
     }
 
     getUserInfo() {
-        return this._data;
+        return {
+            title: this._data.name,
+            subtitle: this._data.about,
+            avatar: this._data.avatar
+        }
     }
 
     setUserInfo(data) {
